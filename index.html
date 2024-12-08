@@ -13,30 +13,45 @@
             flex-direction: column;
             height: 100vh;
             margin: 0;
-            background: linear-gradient(to bottom right, #fbb034, #ffdd00);
-            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            color: #333;
         }
         .content {
+            text-align: center;
+        }
+        .logos {
             display: flex;
+            justify-content: center;
             align-items: center;
+            margin-bottom: 20px;
         }
         img {
-            width: 100px;
+            width: 80px;
             height: auto;
-            margin: 0 20px;
+            margin: 0 15px;
         }
         h1 {
-            font-size: 5rem;
-            color: #ffffff;
-            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+            font-size: 3rem;
+            font-weight: bold;
+            color: #2ecc71;
+            margin: 0;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
     <div class="content">
-        <img src="robux.png" alt="Robux Logo">
+        <div class="logos">
+            <img src="robux.png" alt="Robux Logo">
+            <img src="robux.png" alt="Robux Logo">
+        </div>
         <h1>Your Robux Was Generated!</h1>
-        <img src="robux.png" alt="Robux Logo">
+        <p class="subtitle">Enjoy your new balance!</p>
     </div>
 </body>
 </html>
