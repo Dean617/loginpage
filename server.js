@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
-const uri = "mongodb+srv://10202008:<db_password>@flights.huvbs.mongodb.net/?retryWrites=true&w=majority&appName=Flights";
+const uri = "mongodb+srv://10202008:<10202008>@flights.huvbs.mongodb.net/?retryWrites=true&w=majority&appName=Flights";
 
 app.use(bodyParser.json());
 
