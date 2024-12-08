@@ -1,44 +1,28 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
+const { MongoClient } = require('mongodb');
+const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
-const port = 3000;
+const uri = "mongodb+srv://10202008:<db_password>@flights.huvbs.mongodb.net/?retryWrites=true&w=majority&appName=Flights";
 
-// Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-// MongoDB connection
-mongoose.connect("mongodb+srv://10202008:<db_password>@flights.huvbs.mongodb.net/?retryWrites=true&w=majority&appName=Flights", { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log("Connected to MongoDB"))
-    .catch((err) => console.error("Error connecting to MongoDB:", err));
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-// Define a User schema
-const userSchema = new mongoose.Schema({
-    username: String,
-    password: String,
-});
-
-// Create a User model
-const User = mongoose.model("User", userSchema);
-
-// Handle login requests
-app.post("/login", async (req, res) => {
-    const { username, password } = req.body;
-
+app.post('/login', async (req, res) => {
     try {
-        const user = await User.findOne({ username, password });
-        if (user) {
-            res.send(`Login successful! Welcome, ${user.username}.`);
-        } else {
-            res.send("Invalid username or password.");
-        }
-    } catch (err) {
-        res.status(500).send("Server error: " + err.message);
+        const { username, password } = req.body;
+        await client.connect();
+        const database = client.db('loginData');
+        const users = database.collection('users');
+        await users.insertOne({ username, password });
+        res.status(200).send('Login data saved!');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error saving login data.');
+    } finally {
+        await client.close();
     }
 });
 
-// Start the server
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-});
+app.listen(3000, () => console.log('Server running on http://localhost:3000'));
